@@ -1,0 +1,17 @@
+<phpunit 
+    bootstrap="./bootstrap.php" 
+    colors="true" 
+    stopOnFailure="false" 
+    syntaxCheck="false" 
+    processIsolation="true">
+    
+    <testsuites>
+        <testsuite name="Github">
+            <directory>./library</directory>
+            <directory>./application</directory>
+            <directory>../application/modules/github</directory>
+        </testsuite>
+    </testsuites>
+    
+    
+</phpunit>
