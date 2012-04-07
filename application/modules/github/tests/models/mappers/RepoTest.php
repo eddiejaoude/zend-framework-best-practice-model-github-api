@@ -89,5 +89,57 @@ class Test_Github_Model_Mapper_RepoTest extends BaseTestCase {
         }
     }
 
+    /**
+     * Get tags
+     *
+     * @author Eddie Jaoude
+     * @param null
+     * @return null
+     *
+     */
+    public function testGetTags() {
+        $username = 'eddiejaoude';
+        $repo = 'Zend-Framework--Doctrine-ORM--PHPUnit--Ant--Jenkins-CI--TDD-';
+        $result = $this->_model->getTags(
+            new Github_Model_User(array('username' => $username)),
+            new Github_Model_Repo(array('name' => $repo))
+        );
+
+        $this->assertEquals(true, is_array($result));
+        foreach ($result as $k=>$v) {
+            $this->assertEquals(true, $v instanceof Github_Model_Tag);
+            $this->assertEquals(true, is_string($v->getName()));
+            $this->assertEquals(true, is_string($v->getSha()));
+            $this->assertEquals(true, is_string($v->getUrl()));
+            $this->assertEquals(true, is_string($v->getZipballUrl()));
+            $this->assertEquals(true, is_string($v->getTarballUrl()));
+        }
+    }
+
+    /**
+     * Get branches
+     *
+     * @author Eddie Jaoude
+     * @param null
+     * @return null
+     *
+     */
+    public function testGetBranches() {
+        $username = 'eddiejaoude';
+        $repo = 'Zend-Framework--Doctrine-ORM--PHPUnit--Ant--Jenkins-CI--TDD-';
+        $result = $this->_model->getBranches(
+            new Github_Model_User(array('username' => $username)),
+            new Github_Model_Repo(array('name' => $repo))
+        );
+
+        $this->assertEquals(true, is_array($result));
+        foreach ($result as $k=>$v) {
+            $this->assertEquals(true, $v instanceof Github_Model_Branch);
+            $this->assertEquals(true, is_string($v->getName()));
+            $this->assertEquals(true, is_string($v->getSha()));
+            $this->assertEquals(true, is_string($v->getUrl()));
+        }
+    }
+
 }
 

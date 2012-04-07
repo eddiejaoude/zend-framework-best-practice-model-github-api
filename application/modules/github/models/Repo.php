@@ -1,5 +1,5 @@
 <?php
-class Github_Model_Repo {
+class Github_Model_Repo extends Github_Model_Base {
     
     private $_url;
     private $_html_url;
@@ -21,23 +21,6 @@ class Github_Model_Repo {
     private $_pushed_at;
     private $_created_at;
     private $_updated_at;
-
-    public function __construct(array $options = null) {
-        if (is_array($options)) {
-            $this->setOptions($options);
-        }
-    }
-
-    public function setOptions(array $options) {
-        $methods = get_class_methods($this);
-        foreach ($options as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
-                $this->$method($value);
-            }
-        }
-        return $this;
-    }
 
     public function setName($name) {
         $this->_name = (string) $name;
