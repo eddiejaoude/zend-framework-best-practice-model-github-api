@@ -62,6 +62,30 @@ class Test_Github_Model_Mapper_RepoTest extends BaseTestCase {
             $this->assertEquals(true, is_string($v->getDescription()));
             $this->assertEquals(true, is_string($v->getHomepage()));
             $this->assertEquals(true, is_string($v->getUrl()));
+            $this->assertEquals(true, is_object($v->getOwner()));
+            $this->assertEquals(true, is_string($v->getOwner()->getUsername()));
+            $this->assertEquals(true, is_int($v->getOwner()->getId()));
+            $this->assertEquals(true, is_string($v->getOwner()->getAvatarUrl()));
+            $this->assertEquals(true, is_int($v->getOwner()->getGravatarId()));
+            $this->assertEquals(true, is_string($v->getOwner()->getUrl()));
+            $this->assertEquals(true, is_string($v->getHtmlUrl()));
+            $this->assertEquals(true, is_string($v->getCloneUrl()));
+            $this->assertEquals(true, is_string($v->getGitUrl()));
+            $this->assertEquals(true, is_string($v->getSshUrl()));
+            $this->assertEquals(true, is_string($v->getSvnUrl()));
+            $this->assertEquals(true, is_bool($v->getPrivate()));
+            $this->assertEquals(true, is_bool($v->getFork()));
+            $this->assertEquals(true, is_int($v->getForks()));
+            $this->assertEquals(true, is_int($v->getWatchers()));
+            $this->assertEquals(true, is_int($v->getSize()));
+            if (null != $v->getMasterBranch()) {
+                $this->assertEquals(true, is_string($v->getMasterBranch()));
+            }
+            $this->assertEquals(true, is_int($v->getOpenIssues()));
+            $this->assertEquals(true, is_string($v->getPushedAt()));
+            $this->assertEquals(true, is_string($v->getCreatedAt()));
+            $this->assertEquals(true, is_string($v->getUpdatedAt()));
+
         }
     }
 

@@ -53,7 +53,33 @@ class Github_Model_Mapper_Repo
                 $repoEntity->setName($repo->name)
                     ->setDescription($repo->description)
                     ->setHomepage($repo->homepage)
-                    ->setUrl($repo->url);
+                    ->setUrl($repo->url)
+                    ->setHtmlUrl($repo->html_url)
+                    ->setCloneUrl($repo->clone_url)
+                    ->setGitUrl($repo->git_url)
+                    ->setSshUrl($repo->ssh_url)
+                    ->setSvnUrl($repo->svn_url)
+                    ->setPrivate($repo->private)
+                    ->setFork($repo->fork)
+                    ->setForks($repo->forks)
+                    ->setWatchers($repo->watchers)
+                    ->setSize($repo->size)
+                    ->setOpenIssues($repo->open_issues)
+                    ->setPushedAt($repo->pushed_at)
+                    ->setCreatedAt($repo->created_at)
+                    ->setUpdatedAt($repo->updated_at);
+
+                if (!empty($repo->master_branch)) {
+                    $repoEntity->setMasterBranch($repo->master_branch);
+                }
+
+                $userEntity = new Github_Model_User;
+                $userEntity->setUsername($repo->owner->login)
+                    ->setAvatarUrl($repo->owner->avatar_url)
+                    ->setUrl($repo->owner->url)
+                    ->setGravatarId($repo->owner->gravatar_id)
+                    ->setId($repo->owner->id);
+                $repoEntity->setOwner($userEntity);
 
                 $userEntityResponse->addRepo($repoEntity);
             }
