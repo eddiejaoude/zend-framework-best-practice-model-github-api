@@ -1,5 +1,33 @@
-// ~~~~~ Zend Framework Model Mappers for GitHub's API ~~~~~ //
+== Zend Framework Model Mappers for GitHub's API ==
 A best practice example of how to use zf mappers with a webservice. Unit tests & mocks included. 
 
-Any suggestions / ideas / improvememts welcome
+Any suggestions / ideas / improvememts welcome...
 
+
+== Example usage ==
+$registry = Zend_Registry::getInstance();
+$datasource = new Github_Model_Datasource($registry);
+$model = new Github_Model_Mapper_Repo($datasource)
+$result = $model->findByUsername(new Github_Model_User(array('username' => $username)));
+
+== Example Mock usage ==
+$mock = new Github_Test_Model_Mock;
+$model = new Github_Model_Mapper_Repo($mock)
+$result = $model->findByUsername(new Github_Model_User(array('username' => $username)));
+
+== Example run unit tests ==
+> cd /tests
+> phpunit
+OUTPUT:
+---------------------------------------------------------------------------------------------
+eddie@dev:/var/www/vhosts/gh.zf-model-mappers-github-api/git/tests$ phpunit
+PHPUnit 3.6.10 by Sebastian Bergmann.
+
+Configuration read from /var/www/vhosts/gh.zf-model-mappers-github-api/git/tests/phpunit.xml
+
+..........
+
+Time: 7 seconds, Memory: 9.00Mb
+
+OK (10 tests, 1352 assertions)
+---------------------------------------------------------------------------------------------
