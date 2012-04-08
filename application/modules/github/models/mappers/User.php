@@ -1,26 +1,44 @@
 <?php
 
-class Github_Model_Mapper_User {
+class Github_Model_Mapper_User extends Github_Model_Mapper_Base
+{
 
-    protected $_datasource;
+    public function findByUsername(Github_Model_User $userEntityRequest)
+    {
+        $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
+            $userEntityRequest->getUsername());
 
-    public function setDatasource($datasource) {
-        if (is_string($datasource)) {
-            $datasource = new $datasource();
+        if (($userEntityResponse = $this->getCache()->load($cacheName)) === false) {
+            $response = $this->getDatasource()->restGet('/users/' . $userEntityRequest->getUsername());
+            $body = $response->getBody();
+            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+
+            $userEntityResponse = new Github_Model_User;
+            $userEntityResponse->setUsername($json->login)
+                ->setAvatarUrl($json->avatar_url)
+                ->setUrl($json->url)
+                ->setGravatarId($json->gravatar_id)
+                ->setId($json->id)
+                ->setUrl($json->url)
+                ->setName($json->name)
+                ->setCompany($json->company)
+                ->setBlog($json->blog)
+                ->setLocation($json->location)
+                ->setEmail($json->email)
+                ->setHireable($json->hireable)
+                ->setBio($json->bio)
+                ->setPublicRepos($json->public_repos)
+                ->setPublicGists($json->public_gists)
+                ->setFollowers($json->followers)
+                ->setFollowing($json->following)
+                ->setHtmlUrl($json->html_url)
+                ->setCreatedAt($json->created_at)
+                ->setType($json->type);
+
+            $this->getCache()->save($userEntityResponse, $cacheName);
         }
-        if ($datasource instanceof Github_Model_Datasource) {
-            $datasource = $datasource->getClient();
-        }
-        $this->_datasource = $datasource;
-        return $this;
+
+        return $userEntityResponse;
     }
-
-    public function getDatasource() {
-        if (null === $this->_datasource) {
-            $this->setDatasource('Github_Model_Datasource');
-        }
-        return $this->_datasource;
-    }
-
 
 }

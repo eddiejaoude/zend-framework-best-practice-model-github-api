@@ -3,41 +3,7 @@
 class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
 {
 
-    protected $_datasource;
-    protected $_cache;
-
-    public function __construct($datasource = null)
-    {
-        if (!empty($datasource)) {
-            $this->setDatasource($datasource);
-        }
-    }
-
-    public function setDatasource($datasource)
-    {
-        if ($datasource instanceof Github_Model_Datasource) {
-            $this->_datasource = $datasource->getClient();
-            $this->_cache = $datasource->getCache();
-            return $this;
-        }
-        $this->_datasource = $datasource;
-        return $this;
-    }
-
-    public function getDatasource()
-    {
-        if (null === $this->_datasource) {
-            $this->setDatasource('Github_Model_Datasource');
-        }
-        return $this->_datasource;
-    }
-
-    public function getCache()
-    {
-        return $this->_cache;
-    }
-
-    public function findByUser(Github_Model_User $userEntityRequest)
+    public function findByUsername(Github_Model_User $userEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' . $userEntityRequest->getUsername());
         if (($userEntityResponse = $this->getCache()->load($cacheName)) === false) {

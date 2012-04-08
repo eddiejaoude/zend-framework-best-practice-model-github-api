@@ -39,16 +39,16 @@ class Test_Github_Model_Mapper_RepoTest extends BaseTestCase {
     }
     
     /**
-     * Find by user
+     * Find by username
      *
      * @author Eddie Jaoude
      * @param null
      * @return null
      *
      */
-    public function testFindByUser() {
+    public function testFindByUsername() {
         $username = 'eddiejaoude';
-        $result = $this->_model->findByUser(new Github_Model_User(array('username' => $username)));
+        $result = $this->_model->findByUsername(new Github_Model_User(array('username' => $username)));
 
         $this->assertEquals(true, is_object($result));
         $this->assertEquals(true, $result instanceof Github_Model_User);
