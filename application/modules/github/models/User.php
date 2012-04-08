@@ -37,7 +37,7 @@ class Github_Model_User extends Github_Model_Base {
     }
 
     public function setGravatarId($gravatar_id) {
-        $this->_gravatar_id = (int) $gravatar_id;
+        $this->_gravatar_id = (string) $gravatar_id;
         return $this;
     }
 

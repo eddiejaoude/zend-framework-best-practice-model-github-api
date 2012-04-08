@@ -139,11 +139,11 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
             $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $branches = array();
-            foreach ($json as $tag) {
+            foreach ($json as $branch) {
                 $branchEntity = new Github_Model_Branch;
-                $branchEntity->setName($tag->name)
-                    ->setSha($tag->commit->sha)
-                    ->setUrl($tag->commit->url);
+                $branchEntity->setName($branch->name)
+                    ->setSha($branch->commit->sha)
+                    ->setUrl($branch->commit->url);
 
                 $branches[] = $branchEntity;
             }
@@ -151,6 +151,69 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         }
 
         return $branches;
+    }
+
+    public function getLanguages(Github_Model_User $userEntityRequest, Github_Model_Repo $repoEntityRequest)
+    {
+        $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
+            $userEntityRequest->getUsername() . '_' .
+            $repoEntityRequest->getName());
+
+        if (($languages = $this->getCache()->load($cacheName)) === false) {
+            $response = $this->getDatasource()->restGet(
+                '/repos/' .
+                    $userEntityRequest->getUsername() .  '/' .
+                    $repoEntityRequest->getName() .
+                    '/languages'
+            );
+            $body = $response->getBody();
+            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+
+            $languages = array();
+            foreach ($json as $language=>$size) {
+                $languageEntity = new Github_Model_Language;
+                $languageEntity->setName($language)
+                    ->setSize($size);
+
+                $languages[] = $languageEntity;
+            }
+            $this->getCache()->save($languages, $cacheName);
+        }
+
+        return $languages;
+    }
+
+    public function getCollaborators(Github_Model_User $userEntityRequest, Github_Model_Repo $repoEntityRequest)
+    {
+        $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
+            $userEntityRequest->getUsername() . '_' .
+            $repoEntityRequest->getName());
+
+        if (($collaborators = $this->getCache()->load($cacheName)) === false) {
+            $response = $this->getDatasource()->restGet(
+                '/repos/' .
+                    $userEntityRequest->getUsername() .  '/' .
+                    $repoEntityRequest->getName() .
+                    '/collaborators'
+            );
+            $body = $response->getBody();
+            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+
+            $collaborators = array();
+            foreach ($json as $collaborator) {
+                $userEntity = new Github_Model_User;
+                $userEntity->setUsername($collaborator->login)
+                    ->setAvatarUrl($collaborator->avatar_url)
+                    ->setUrl($collaborator->url)
+                    ->setGravatarId($collaborator->gravatar_id)
+                    ->setId($collaborator->id);
+
+                $collaborators[] = $userEntity;
+            }
+            $this->getCache()->save($collaborators, $cacheName);
+        }
+
+        return $collaborators;
     }
 
 }

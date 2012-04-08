@@ -66,7 +66,7 @@ class Test_Github_Model_Mapper_RepoTest extends BaseTestCase {
             $this->assertEquals(true, is_string($v->getOwner()->getUsername()));
             $this->assertEquals(true, is_int($v->getOwner()->getId()));
             $this->assertEquals(true, is_string($v->getOwner()->getAvatarUrl()));
-            $this->assertEquals(true, is_int($v->getOwner()->getGravatarId()));
+            $this->assertEquals(true, is_string($v->getOwner()->getGravatarId()));
             $this->assertEquals(true, is_string($v->getOwner()->getUrl()));
             $this->assertEquals(true, is_string($v->getHtmlUrl()));
             $this->assertEquals(true, is_string($v->getCloneUrl()));
@@ -138,6 +138,57 @@ class Test_Github_Model_Mapper_RepoTest extends BaseTestCase {
             $this->assertEquals(true, is_string($v->getName()));
             $this->assertEquals(true, is_string($v->getSha()));
             $this->assertEquals(true, is_string($v->getUrl()));
+        }
+    }
+
+    /**
+     * Get languages
+     *
+     * @author Eddie Jaoude
+     * @param null
+     * @return null
+     *
+     */
+    public function testGetLanguages() {
+        $username = 'eddiejaoude';
+        $repo = 'Zend-Framework--Doctrine-ORM--PHPUnit--Ant--Jenkins-CI--TDD-';
+        $result = $this->_model->getLanguages(
+            new Github_Model_User(array('username' => $username)),
+            new Github_Model_Repo(array('name' => $repo))
+        );
+
+        $this->assertEquals(true, is_array($result));
+        foreach ($result as $k=>$v) {
+            $this->assertEquals(true, $v instanceof Github_Model_Language);
+            $this->assertEquals(true, is_string($v->getName()));
+            $this->assertEquals(true, is_int($v->getSize()));
+        }
+    }
+
+    /**
+     * Get collaborators
+     *
+     * @author Eddie Jaoude
+     * @param null
+     * @return null
+     *
+     */
+    public function testGetCollaborators() {
+        $username = 'eddiejaoude';
+        $repo = 'Zend-Framework--Doctrine-ORM--PHPUnit--Ant--Jenkins-CI--TDD-';
+        $result = $this->_model->getCollaborators(
+            new Github_Model_User(array('username' => $username)),
+            new Github_Model_Repo(array('name' => $repo))
+        );
+
+        $this->assertEquals(true, is_array($result));
+        foreach ($result as $k=>$v) {
+            $this->assertEquals(true, $v instanceof Github_Model_User);
+            $this->assertEquals(true, is_string($v->getUsername()));
+            $this->assertEquals(true, is_string($v->getAvatarUrl()));
+            $this->assertEquals(true, is_string($v->getGravatarId()));
+            $this->assertEquals(true, is_string($v->getUrl()));
+            $this->assertEquals(true, is_int($v->getId()));
         }
     }
 
