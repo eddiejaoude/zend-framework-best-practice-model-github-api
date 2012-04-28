@@ -271,5 +271,44 @@ class Test_Github_Model_Mapper_RepoTest extends BaseTestCase {
         }
     }
 
+    /**
+     * Get watchers
+     *
+     * @author Eddie Jaoude
+     * @param null
+     * @return null
+     *
+     */
+    public function testGetPullRequests() {
+        $username = 'padraic'; // 'eddiejaoude';
+        $repo = 'mutagenesis'; // 'Zend-Framework--Doctrine-ORM--PHPUnit--Ant--Jenkins-CI--TDD-';
+        $result = $this->_model->getPullRequests(
+            new Github_Model_User(array('username' => $username)),
+            new Github_Model_Repo(array('name' => $repo))
+        );
+
+        $this->assertEquals(true, is_array($result));
+
+        foreach($result as $k=>$v) {
+            $this->assertEquals(true, is_string($v->getUrl()));
+            $this->assertEquals(true, is_string($v->getHtmlUrl()));
+            $this->assertEquals(true, is_string($v->getDiffUrl()));
+            $this->assertEquals(true, is_string($v->getPatchUrl()));
+            $this->assertEquals(true, is_string($v->getIssueUrl()));
+            $this->assertEquals(true, is_int($v->getNumber()));
+            $this->assertEquals(true, is_string($v->getState()));
+            $this->assertEquals(true, is_string($v->getTitle()));
+            $this->assertEquals(true, is_string($v->getBody()));
+            $this->assertEquals(true, !is_null($v->getCreatedAt()));
+            $this->assertEquals(true, !is_null($v->getUpdatedAt()));
+            $this->assertEquals(true, is_string($v->getClosedAt()));
+            $this->assertEquals(true, is_string($v->getMergedAt()));
+            $this->assertEquals(true, is_string($v->getLinkSelfHref()));
+            $this->assertEquals(true, is_string($v->getLinkHtmlHref()));
+            $this->assertEquals(true, is_string($v->getLinkCommentsHref()));
+            $this->assertEquals(true, is_string($v->getLinkReviewCommentsHref()));
+        }
+    }
+
 }
 

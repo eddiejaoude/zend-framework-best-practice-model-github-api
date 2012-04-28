@@ -272,4 +272,52 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         return $watchers;
     }
 
+    public function getPullRequests(
+            Github_Model_User $userEntityRequest,
+            Github_Model_Repo $repoEntityRequest
+    )
+    {
+        $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
+            $userEntityRequest->getUsername() . '_' .
+            $repoEntityRequest->getName());
+
+        if (($pullRequests = $this->getCache()->load($cacheName)) === false) {
+            $response = $this->getDatasource()->restGet(
+                '/repos/' .
+                    $userEntityRequest->getUsername() .  '/' .
+                    $repoEntityRequest->getName() .
+                    '/pulls'
+            );
+            $body = $response->getBody();
+            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+
+            $pullRequests = array();
+            foreach ($json as $pullRequest) {
+                $pullRequestEntity = new Github_Model_PullRequest;
+                $pullRequestEntity->setUrl($pullRequest->url)
+                    ->setHtmlUrl($pullRequest->html_url)
+                    ->setDiffUrl($pullRequest->diff_url)
+                    ->setPatchUrl($pullRequest->patch_url)
+                    ->setIssueUrl($pullRequest->issue_url)
+                    ->setNumber($pullRequest->number)
+                    ->setState($pullRequest->state)
+                    ->setTitle($pullRequest->title)
+                    ->setBody($pullRequest->body)
+                    ->setCreatedAt($pullRequest->created_at)
+                    ->setUpdatedAt($pullRequest->updated_at)
+                    ->setClosedAt($pullRequest->closed_at)
+                    ->setMergedAt($pullRequest->merged_at)
+                    ->setLinkSelfHref($pullRequest->_links->self->href)
+                    ->setLinkHtmlHref($pullRequest->_links->html->href)
+                    ->setLinkCommentsHref($pullRequest->_links->comments->href)
+                    ->setLinkReviewCommentsHref($pullRequest->_links->review_comments->href);
+
+                $pullRequests[] = $pullRequestEntity;
+            }
+            $this->getCache()->save($pullRequests, $cacheName);
+        }
+
+        return $pullRequests;
+    }
+
 }
