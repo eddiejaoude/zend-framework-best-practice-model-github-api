@@ -1,15 +1,28 @@
 <?php
 
+/**
+ * Github model mapper repo
+ *
+ * @author  Eddie Jaoude
+ * @package Github
+ */
 class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
 {
 
+    /**
+     * Find by username
+     *
+     * @param Github_Model_User $userEntityRequest
+     *
+     * @return Github_Model_User
+     */
     public function findByUsername(Github_Model_User $userEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' . $userEntityRequest->getUsername());
         if (($userEntityResponse = $this->getCache()->load($cacheName)) === false) {
             $response = $this->getDatasource()->restGet('/users/' . $userEntityRequest->getUsername() . '/repos');
-            $body = $response->getBody();
-            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+            $body     = $response->getBody();
+            $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $userEntityResponse = new Github_Model_User;
             $userEntityResponse->setUsername($userEntityRequest->getUsername());
@@ -55,6 +68,14 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         return $userEntityResponse;
     }
 
+    /**
+     * Get tags
+     *
+     * @param Github_Model_User $userEntityRequest
+     * @param Github_Model_Repo $repoEntityRequest
+     *
+     * @return array
+     */
     public function getTags(Github_Model_User $userEntityRequest, Github_Model_Repo $repoEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
@@ -64,12 +85,12 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         if (($tags = $this->getCache()->load($cacheName)) === false) {
             $response = $this->getDatasource()->restGet(
                 '/repos/' .
-                    $userEntityRequest->getUsername() .  '/' .
+                    $userEntityRequest->getUsername() . '/' .
                     $repoEntityRequest->getName() .
                     '/tags'
             );
-            $body = $response->getBody();
-            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+            $body     = $response->getBody();
+            $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $tags = array();
             foreach ($json as $tag) {
@@ -88,6 +109,14 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         return $tags;
     }
 
+    /**
+     * Get branches
+     *
+     * @param Github_Model_User $userEntityRequest
+     * @param Github_Model_Repo $repoEntityRequest
+     *
+     * @return array
+     */
     public function getBranches(Github_Model_User $userEntityRequest, Github_Model_Repo $repoEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
@@ -97,12 +126,12 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         if (($branches = $this->getCache()->load($cacheName)) === false) {
             $response = $this->getDatasource()->restGet(
                 '/repos/' .
-                    $userEntityRequest->getUsername() .  '/' .
+                    $userEntityRequest->getUsername() . '/' .
                     $repoEntityRequest->getName() .
                     '/branches'
             );
-            $body = $response->getBody();
-            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+            $body     = $response->getBody();
+            $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $branches = array();
             foreach ($json as $branch) {
@@ -116,9 +145,18 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
             $this->getCache()->save($branches, $cacheName);
         }
 
+        // @todo return repo with collection of branches?
         return $branches;
     }
 
+    /**
+     * Get languages
+     *
+     * @param Github_Model_User $userEntityRequest
+     * @param Github_Model_Repo $repoEntityRequest
+     *
+     * @return array
+     */
     public function getLanguages(Github_Model_User $userEntityRequest, Github_Model_Repo $repoEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
@@ -128,15 +166,15 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         if (($languages = $this->getCache()->load($cacheName)) === false) {
             $response = $this->getDatasource()->restGet(
                 '/repos/' .
-                    $userEntityRequest->getUsername() .  '/' .
+                    $userEntityRequest->getUsername() . '/' .
                     $repoEntityRequest->getName() .
                     '/languages'
             );
-            $body = $response->getBody();
-            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+            $body     = $response->getBody();
+            $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $languages = array();
-            foreach ($json as $language=>$size) {
+            foreach ($json as $language=> $size) {
                 $languageEntity = new Github_Model_Language;
                 $languageEntity->setName($language)
                     ->setSize($size);
@@ -149,6 +187,14 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         return $languages;
     }
 
+    /**
+     * Get collaborators
+     *
+     * @param Github_Model_User $userEntityRequest
+     * @param Github_Model_Repo $repoEntityRequest
+     *
+     * @return array
+     */
     public function getCollaborators(Github_Model_User $userEntityRequest, Github_Model_Repo $repoEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
@@ -158,12 +204,12 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         if (($collaborators = $this->getCache()->load($cacheName)) === false) {
             $response = $this->getDatasource()->restGet(
                 '/repos/' .
-                    $userEntityRequest->getUsername() .  '/' .
+                    $userEntityRequest->getUsername() . '/' .
                     $repoEntityRequest->getName() .
                     '/collaborators'
             );
-            $body = $response->getBody();
-            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+            $body     = $response->getBody();
+            $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $collaborators = array();
             foreach ($json as $collaborator) {
@@ -182,6 +228,14 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         return $collaborators;
     }
 
+    /**
+     * Get forks
+     *
+     * @param Github_Model_User $userEntityRequest
+     * @param Github_Model_Repo $repoEntityRequest
+     *
+     * @return array
+     */
     public function getForks(Github_Model_User $userEntityRequest, Github_Model_Repo $repoEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
@@ -190,12 +244,12 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         if (($repos = $this->getCache()->load($cacheName)) === false) {
             $response = $this->getDatasource()->restGet(
                 '/repos/' .
-                    $userEntityRequest->getUsername() .  '/' .
+                    $userEntityRequest->getUsername() . '/' .
                     $repoEntityRequest->getName() .
                     '/forks'
             );
-            $body = $response->getBody();
-            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+            $body     = $response->getBody();
+            $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $repos = array();
             foreach ($json as $repo) {
@@ -239,6 +293,14 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         return $repos;
     }
 
+    /**
+     * Get watchers
+     *
+     * @param Github_Model_User $userEntityRequest
+     * @param Github_Model_Repo $repoEntityRequest
+     *
+     * @return array
+     */
     public function getWatchers(Github_Model_User $userEntityRequest, Github_Model_Repo $repoEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
@@ -248,12 +310,12 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         if (($watchers = $this->getCache()->load($cacheName)) === false) {
             $response = $this->getDatasource()->restGet(
                 '/repos/' .
-                    $userEntityRequest->getUsername() .  '/' .
+                    $userEntityRequest->getUsername() . '/' .
                     $repoEntityRequest->getName() .
                     '/watchers'
             );
-            $body = $response->getBody();
-            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+            $body     = $response->getBody();
+            $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $watchers = array();
             foreach ($json as $watcher) {
@@ -272,9 +334,17 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         return $watchers;
     }
 
+    /**
+     * Get pull requests
+     *
+     * @param Github_Model_User $userEntityRequest
+     * @param Github_Model_Repo $repoEntityRequest
+     *
+     * @return array
+     */
     public function getPullRequests(
-            Github_Model_User $userEntityRequest,
-            Github_Model_Repo $repoEntityRequest
+        Github_Model_User $userEntityRequest,
+        Github_Model_Repo $repoEntityRequest
     )
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
@@ -284,12 +354,12 @@ class Github_Model_Mapper_Repo extends Github_Model_Mapper_Base
         if (($pullRequests = $this->getCache()->load($cacheName)) === false) {
             $response = $this->getDatasource()->restGet(
                 '/repos/' .
-                    $userEntityRequest->getUsername() .  '/' .
+                    $userEntityRequest->getUsername() . '/' .
                     $repoEntityRequest->getName() .
                     '/pulls'
             );
-            $body = $response->getBody();
-            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+            $body     = $response->getBody();
+            $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $pullRequests = array();
             foreach ($json as $pullRequest) {

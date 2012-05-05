@@ -43,6 +43,7 @@ class Github_Model_Datasource {
             $this->_registry->config->cache = $cache;
         }
 
+        // @todo get from config
         $this->_cache = Zend_Cache::factory(
             'core',
             'file',

@@ -1,8 +1,20 @@
 <?php
 
+/**
+ * User mapper
+ *
+ * @package Github
+ */
 class Github_Model_Mapper_User extends Github_Model_Mapper_Base
 {
 
+    /**
+     * Find by username
+     *
+     * @param Github_Model_User $userEntityRequest
+     *
+     * @return Github_Model_User
+     */
     public function findByUsername(Github_Model_User $userEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
@@ -10,8 +22,8 @@ class Github_Model_Mapper_User extends Github_Model_Mapper_Base
 
         if (($userEntityResponse = $this->getCache()->load($cacheName)) === false) {
             $response = $this->getDatasource()->restGet('/users/' . $userEntityRequest->getUsername());
-            $body = $response->getBody();
-            $json = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
+            $body     = $response->getBody();
+            $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
             $userEntityResponse = new Github_Model_User;
             $userEntityResponse->setUsername($json->login)
