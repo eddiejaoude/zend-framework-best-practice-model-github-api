@@ -25,11 +25,11 @@ $loader = new Zend_Loader_Autoloader_Resource(
         'namespace' => 'Github'
     )
 );
-$loader->addResourceType('entities', 'models/entities', 'Model_Entity_');
-$loader->addResourceType('daos', 'models/daos', 'Model_Dao_');
-$loader->addResourceType('mappers', 'models/mappers', 'Model_Mapper_');
-$loader->addResourceType('services', 'models/services', 'Model_Service_');
-$loader->addResourceType('services-exceptions', 'models/services/exceptions', 'Model_Service_Exception_');
+$loader->addResourceType('entities', 'models/entities', 'Model_Entity');
+$loader->addResourceType('daos', 'models/daos', 'Model_Dao');
+$loader->addResourceType('mappers', 'models/mappers', 'Model_Mapper');
+$loader->addResourceType('services', 'models/services', 'Model_Service');
+$loader->addResourceType('services-exceptions', 'models/services/exceptions', 'Model_Service_Exception');
 
 
 abstract class BaseTestCase extends Zend_Test_PHPUnit_ControllerTestCase {
