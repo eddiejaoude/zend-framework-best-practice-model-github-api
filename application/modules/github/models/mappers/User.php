@@ -5,17 +5,17 @@
  *
  * @package Github
  */
-class Github_Model_Mapper_User extends Github_Model_Mapper_Base
+class Github_Model_Mapper_User extends Github_Model_Mapper_Core
 {
 
     /**
      * Find by username
      *
-     * @param Github_Model_User $userEntityRequest
+     * @param Github_Model_Entity_User $userEntityRequest
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
-    public function findByUsername(Github_Model_User $userEntityRequest)
+    public function findByUsername(Github_Model_Entity_User $userEntityRequest)
     {
         $cacheName = $this->sanatizeCacheName(__NAMESPACE__ . '_' . __CLASS__ . '_' . __FUNCTION__ . '_' .
             $userEntityRequest->getUsername());
@@ -25,7 +25,7 @@ class Github_Model_Mapper_User extends Github_Model_Mapper_Base
             $body     = $response->getBody();
             $json     = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
 
-            $userEntityResponse = new Github_Model_User;
+            $userEntityResponse = new Github_Model_Entity_User;
             $userEntityResponse->setUsername($json->login)
                 ->setAvatarUrl($json->avatar_url)
                 ->setUrl($json->url)

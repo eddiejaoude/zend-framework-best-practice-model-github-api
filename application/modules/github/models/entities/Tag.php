@@ -4,7 +4,7 @@
  *
  * @package Github
  */
-class Github_Model_Tag extends Github_Model_Base {
+class Github_Model_Entity_Tag extends Github_Model_Entity_Core {
 
     /**
      * Name
@@ -42,7 +42,7 @@ class Github_Model_Tag extends Github_Model_Base {
     /**
      * @param $name
      *
-     * @return Github_Model_Tag
+     * @return Github_Model_Entity_Tag
      */public function setName($name)
     {
         $this->_name = (string) $name;
@@ -58,7 +58,7 @@ class Github_Model_Tag extends Github_Model_Base {
 
     /**
      * @param $sha
-     * @return Github_Model_Tag
+     * @return Github_Model_Entity_Tag
      */public function setSha($sha)
     {
         $this->_sha = (string) $sha;
@@ -74,7 +74,7 @@ class Github_Model_Tag extends Github_Model_Base {
 
     /**
      * @param $zipball_url
-     * @return Github_Model_Tag
+     * @return Github_Model_Entity_Tag
      */public function setZipballUrl($zipball_url)
     {
         $this->_zipball_url = (string) $zipball_url;
@@ -90,7 +90,7 @@ class Github_Model_Tag extends Github_Model_Base {
 
     /**
      * @param $tarball_url
-     * @return Github_Model_Tag
+     * @return Github_Model_Entity_Tag
      */public function setTarballUrl($tarball_url)
     {
         $this->_tarball_url = (string) $tarball_url;
@@ -106,7 +106,7 @@ class Github_Model_Tag extends Github_Model_Base {
 
     /**
      * @param $url
-     * @return Github_Model_Tag
+     * @return Github_Model_Entity_Tag
      */public function setUrl($url)
     {
         $this->_url = (string) $url;

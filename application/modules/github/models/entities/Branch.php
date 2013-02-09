@@ -1,5 +1,5 @@
 <?php
-class Github_Model_Branch extends Github_Model_Base {
+class Github_Model_Entity_Branch extends Github_Model_Entity_Core {
 
     private $_name;
     private $_sha;

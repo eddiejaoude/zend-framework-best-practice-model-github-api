@@ -2,7 +2,7 @@
 /**
  * User entity
  */
-class Github_Model_User extends Github_Model_Base
+class Github_Model_Entity_User extends Github_Model_Entity_Core
 {
 
     /**
@@ -158,11 +158,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param int $id
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setId($id)
     {
         $this->_id = (int)$id;
+
         return $this;
     }
 
@@ -183,11 +184,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param string $avatar_url
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setAvatarUrl($avatar_url)
     {
         $this->_avatar_url = (string)$avatar_url;
+
         return $this;
     }
 
@@ -208,11 +210,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param string $username
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setUsername($username)
     {
         $this->_username = (string)$username;
+
         return $this;
     }
 
@@ -233,11 +236,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param string $gravatar_id
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setGravatarId($gravatar_id)
     {
         $this->_gravatar_id = (string)$gravatar_id;
+
         return $this;
     }
 
@@ -258,11 +262,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param string $url
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setUrl($url)
     {
         $this->_url = (string)$url;
+
         return $this;
     }
 
@@ -284,24 +289,26 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param array $repos
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setRepos(array $repos)
     {
         $this->_repos = $repos;
+
         return $this;
     }
 
     /**
      * Add repo
      *
-     * @param Github_Model_Repo $repo
+     * @param Github_Model_Entity_Repo $repo
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
-    public function addRepo(Github_Model_Repo $repo)
+    public function addRepo(Github_Model_Entity_Repo $repo)
     {
         $this->_repos[] = $repo;
+
         return $this;
     }
 
@@ -334,11 +341,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param string $name
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setName($name)
     {
         $this->_name = (string)$name;
+
         return $this;
     }
 
@@ -357,11 +365,12 @@ class Github_Model_User extends Github_Model_Base
     /**
      * @param $company
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setCompany($company)
     {
         $this->_company = (string)$company;
+
         return $this;
     }
 
@@ -382,11 +391,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param string $blog
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setBlog($blog)
     {
         $this->_blog = (string)$blog;
+
         return $this;
     }
 
@@ -407,11 +417,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param string $location
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setLocation($location)
     {
         $this->_location = (string)$location;
+
         return $this;
     }
 
@@ -432,11 +443,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param string $email
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setEmail($email)
     {
         $this->_email = (string)$email;
+
         return $this;
     }
 
@@ -457,11 +469,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param bool $hireable
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setHireable($hireable)
     {
         $this->_hireable = (bool)$hireable;
+
         return $this;
     }
 
@@ -482,11 +495,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param $bio
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setBio($bio)
     {
         $this->_bio = (string)$bio;
+
         return $this;
     }
 
@@ -507,11 +521,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param $public_repos
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setPublicRepos($public_repos)
     {
         $this->_public_repos = (int)$public_repos;
+
         return $this;
     }
 
@@ -532,11 +547,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param int $public_gists
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setPublicGists($public_gists)
     {
         $this->_public_gists = (int)$public_gists;
+
         return $this;
     }
 
@@ -557,11 +573,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param int $followers
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setFollowers($followers)
     {
         $this->_followers = (int)$followers;
+
         return $this;
     }
 
@@ -582,11 +599,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param int $following
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setFollowing($following)
     {
         $this->_following = (int)$following;
+
         return $this;
     }
 
@@ -607,11 +625,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param  string $html_url
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setHtmlUrl($html_url)
     {
         $this->_html_url = (string)$html_url;
+
         return $this;
     }
 
@@ -632,11 +651,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param $created_at
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setCreatedAt($created_at)
     {
         $this->_created_at = (string)$created_at;
+
         return $this;
     }
 
@@ -657,11 +677,12 @@ class Github_Model_User extends Github_Model_Base
      *
      * @param $type
      *
-     * @return Github_Model_User
+     * @return Github_Model_Entity_User
      */
     public function setType($type)
     {
         $this->_type = (string)$type;
+
         return $this;
     }
 

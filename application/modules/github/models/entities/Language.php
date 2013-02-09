@@ -1,6 +1,6 @@
 <?php
 
-class Github_Model_Language extends Github_Model_Base {
+class Github_Model_Entity_Language extends Github_Model_Entity_Core {
 
     private $_name;
     private $_size;

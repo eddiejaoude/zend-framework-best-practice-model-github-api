@@ -1,17 +1,47 @@
-<phpunit 
-    bootstrap="./bootstrap.php" 
-    colors="true" 
-    stopOnFailure="false" 
-    syntaxCheck="false" 
-    processIsolation="true">
-    
+<phpunit
+    bootstrap="bootstrap.php"
+    colors="true"
+    stopOnFailure="false"
+    syntaxCheck="true"
+    processIsolation="true"
+    strict="true"
+    verbose="true">
+
     <testsuites>
         <testsuite name="Github">
-            <directory>./library</directory>
-            <directory>./application</directory>
-            <directory>../application/modules/github</directory>
+            <file>./application/github/models/mappers/RepoSuccessTest.php</file>
+            <file>./application/github/models/mappers/RepoNoResultsTest.php</file>
+            <file>./application/github/models/mappers/RepoFailureTest.php</file>
+            <file>./application/github/models/services/RepoSuccessTest.php</file>
+            <file>./application/github/models/services/RepoFailureTest.php</file>
+            <file>./application/github/models/services/RepoNoResultsTest.php</file>
         </testsuite>
     </testsuites>
-    
-    
+
+    <!--
+    <filter>
+        <blacklist>
+            <directory>./../tests</directory>
+            <directory>./../library</directory>
+        </blacklist>
+        <whitelist>
+            <directory>./../application</directory>
+        </whitelist>
+    </filter>
+    -->
+
+    <logging>
+        <log type="coverage-html" target="build/report" charset="UTF-8"
+             highlight="false" lowUpperBound="50" highLowerBound="90"/>
+        <log type="coverage-clover" target="build/coverage.xml"/>
+        <log type="coverage-php" target="build/coverage.serialized"/>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+        <log type="json" target="build/logfile.json"/>
+        <log type="tap" target="build/logfile.tap"/>
+        <log type="junit" target="build/logfile.xml" logIncompleteSkipped="false"/>
+        <log type="testdox-html" target="build/testdox.html"/>
+        <log type="testdox-text" target="build/testdox.txt"/>
+    </logging>
+
+
 </phpunit>

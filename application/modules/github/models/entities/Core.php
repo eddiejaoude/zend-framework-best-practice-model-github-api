@@ -1,5 +1,5 @@
 <?php
-class Github_Model_Base {
+abstract class Github_Model_Entity_Core {
 
     public function __construct(array $options = null) {
         if (is_array($options)) {

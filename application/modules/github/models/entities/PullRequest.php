@@ -1,5 +1,5 @@
 <?php
-class Github_Model_PullRequest extends Github_Model_Base {
+class Github_Model_Entity_PullRequest extends Github_Model_Entity_Core {
 
     protected $_url;
     protected $_html_url;

@@ -46,7 +46,7 @@
                 --jdepend-chart=${basedir}/build/pdepend/dependencies.svg
                 --overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg
                 --suffix=php
-                --ignore=tests,Zend,Doctrine
+                --ignore=tests,Zend
                 ${source}" />
         </exec>
     </target>
@@ -56,7 +56,7 @@
         <exec executable="phpmd" failonerror="false">
             <arg line="${source} xml codesize,unusedcode
                 --reportfile ${basedir}/build/logs/pmd.xml
-                --exclude tests,Zend,Doctrine
+                --exclude tests,Zend
                 --suffixes php" />
         </exec>
     </target>
@@ -66,7 +66,6 @@
         <exec executable="phpcpd" failonerror="false">
             <arg line="--log-pmd ${basedir}/build/logs/pmd-cpd.xml
                 --exclude ${libsource}/Zend
-                --exclude ${libsource}/Doctrine
                 ${appsource} ${libsource}" />
         </exec>
     </target>

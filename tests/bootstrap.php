@@ -4,6 +4,10 @@
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 
+// mocks
+defined('APPLICATION_TESTS')
+    || define('APPLICATION_TESTS', realpath(dirname(__FILE__) . '/application'));
+
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'testing'));
@@ -14,8 +18,19 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
-require_once 'Zend/Loader/Autoloader.php';
-Zend_Loader_Autoloader::getInstance();
+require_once 'Zend/Loader/Autoloader/Resource.php';
+$loader = new Zend_Loader_Autoloader_Resource(
+    array(
+        'basePath' => APPLICATION_PATH . '/modules/github',
+        'namespace' => 'Github'
+    )
+);
+$loader->addResourceType('entities', 'models/entities', 'Model_Entity_');
+$loader->addResourceType('daos', 'models/daos', 'Model_Dao_');
+$loader->addResourceType('mappers', 'models/mappers', 'Model_Mapper_');
+$loader->addResourceType('services', 'models/services', 'Model_Service_');
+$loader->addResourceType('services-exceptions', 'models/services/exceptions', 'Model_Service_Exception_');
+
 
 abstract class BaseTestCase extends Zend_Test_PHPUnit_ControllerTestCase {
     
