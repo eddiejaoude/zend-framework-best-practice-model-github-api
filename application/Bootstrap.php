@@ -52,24 +52,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      * @return          void
      *
      */
-    protected function _initLogger() {
-        // get registery
-        $registry = Zend_Registry::getInstance();
-        
-        // log file
-        $error_log = $registry->config->logs->tmp_dir .
-                DIRECTORY_SEPARATOR .
-                $registry->config->logs->error_file;
-
-        // create logger object
-        if ('development' == APPLICATION_ENV) {
-            $writer = new Zend_Log_Writer_Firebug();
-        } else {
-            $writer = new Zend_Log_Writer_Stream($error_log);
-        }
-        $logger = new Zend_Log($writer);
-        Zend_Registry::set('logger', $logger);
-    }
+//    protected function _initLogger() {
+//        // get registery
+//        $registry = Zend_Registry::getInstance();
+//
+//        // log file
+//        $error_log = $registry->config->logs->tmp_dir .
+//                DIRECTORY_SEPARATOR .
+//                $registry->config->logs->error_file;
+//
+//        // create logger object
+//        if ('development' == APPLICATION_ENV) {
+//            $writer = new Zend_Log_Writer_Firebug();
+//        } else {
+//            $writer = new Zend_Log_Writer_Stream($error_log);
+//        }
+//        $logger = new Zend_Log($writer);
+//        Zend_Registry::set('logger', $logger);
+//    }
 
 }
 
